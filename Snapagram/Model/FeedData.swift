@@ -11,17 +11,23 @@ import UIKit
 
 var feed = FeedData()
 
-class Thread {
+class Thread: Equatable {
+    var name: String
+    var emoji: String
+    var unread: Int
+    var entries: [ThreadEntry]?
+    
     init(name: String, emoji: String) {
         self.name = name
         self.emoji = emoji
         self.unread = 0
         self.entries = [ThreadEntry]()
     }
-    var name: String
-    var emoji: String
-    var unread: Int
-    var entries: [ThreadEntry]?
+    
+    // for checking equality between thread instances to update entries
+    static func == (lhs: Thread, rhs: Thread) -> Bool {
+        return lhs.name == rhs.name
+    }
 }
 
 struct ThreadEntry {
@@ -57,13 +63,17 @@ class FeedData {
         posts.append(post)
     }
     
-    func addThreadPost(chosenThreadName: String, threadEntry: ThreadEntry) {
+    func addThreadEntry(threadName: String, threadEntry: ThreadEntry) {
         for availableThread in threads {
-            if availableThread.name == chosenThreadName {
+            if availableThread.name == threadName {
                 availableThread.entries?.append(threadEntry)
                 availableThread.unread += 1
             }
         }
+    }
+    
+    func addThread(thread: Thread) {
+        threads.append(thread)
     }
 }
 

@@ -19,6 +19,8 @@
 		A238126E2415AFBC008E0F6C /* FeedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A238126D2415AFBC008E0F6C /* FeedData.swift */; };
 		A23812702415B9C6008E0F6C /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A238126F2415B9C6008E0F6C /* CameraViewController.swift */; };
 		A23812722415C799008E0F6C /* PostImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23812712415C799008E0F6C /* PostImageViewController.swift */; };
+		B0CD011B24177A0A008EFC00 /* CreateThreadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD011A24177A0A008EFC00 /* CreateThreadViewController.swift */; };
+		B0CD011D24178743008EFC00 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0CD011C24178743008EFC00 /* PreviewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		A238126D2415AFBC008E0F6C /* FeedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedData.swift; sourceTree = "<group>"; };
 		A238126F2415B9C6008E0F6C /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		A23812712415C799008E0F6C /* PostImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostImageViewController.swift; sourceTree = "<group>"; };
+		B0CD011A24177A0A008EFC00 /* CreateThreadViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateThreadViewController.swift; sourceTree = "<group>"; };
+		B0CD011C24178743008EFC00 /* PreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,9 +88,11 @@
 		A23812642415AEBB008E0F6C /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B0CD011A24177A0A008EFC00 /* CreateThreadViewController.swift */,
 				A23812622415AE8E008E0F6C /* FeedViewController.swift */,
 				A238126F2415B9C6008E0F6C /* CameraViewController.swift */,
 				A23812712415C799008E0F6C /* PostImageViewController.swift */,
+				B0CD011C24178743008EFC00 /* PreviewViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -180,9 +186,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0CD011B24177A0A008EFC00 /* CreateThreadViewController.swift in Sources */,
 				A23812682415AF20008E0F6C /* ThreadCollectionViewCell.swift in Sources */,
 				A238124F2415A9EF008E0F6C /* AppDelegate.swift in Sources */,
 				A238126A2415AF8D008E0F6C /* PostTableViewCell.swift in Sources */,
+				B0CD011D24178743008EFC00 /* PreviewViewController.swift in Sources */,
 				A238126E2415AFBC008E0F6C /* FeedData.swift in Sources */,
 				A23812632415AE8E008E0F6C /* FeedViewController.swift in Sources */,
 				A23812722415C799008E0F6C /* PostImageViewController.swift in Sources */,

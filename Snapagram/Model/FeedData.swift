@@ -11,14 +11,25 @@ import UIKit
 
 var feed = FeedData()
 
-struct Thread {
+class Thread {
+    init(name: String, emoji: String) {
+        self.name = name
+        self.emoji = emoji
+        self.unread = 0
+        self.entries = [ThreadEntry]()
+    }
     var name: String
     var emoji: String
     var unread: Int
+    var entries: [ThreadEntry]?
+}
+
+struct ThreadEntry {
+    var name: String
+    var image: UIImage?
 }
 
 struct Post {
-    // how to optimize to avoid UIImage?
     var location: String
     var image: UIImage?
     var user: String
@@ -27,19 +38,33 @@ struct Post {
 }
 
 class FeedData {
+    // initialized without unread counts for students to populate with their own content
     var threads: [Thread] = [
-        Thread(name: "memes", emoji: "😂", unread: 2),
-        Thread(name: "dogs", emoji: "🐶", unread: 1),
-        Thread(name: "fashion", emoji: "🕶", unread: 0),
-        Thread(name: "fam", emoji: "👨‍👩‍👧‍👦", unread: 0),
-        Thread(name: "tech", emoji: "💻", unread: 3),
-        Thread(name: "eats", emoji: "🍱", unread: 4),
+        Thread(name: "memes", emoji: "😂"),
+        Thread(name: "dogs", emoji: "🐶"),
+        Thread(name: "fashion", emoji: "🕶"),
+        Thread(name: "fam", emoji: "👨‍👩‍👧‍👦"),
+        Thread(name: "tech", emoji: "💻"),
+        Thread(name: "eats", emoji: "🍱"),
     ]
     var posts: [Post] = [
         Post(location: "New York City", image: UIImage(named: "skyline"), user: "nyerasi", caption: "Concrete jungle, wet dreams tomato 🍅 —Alicia Keys", date: Date()),
         Post(location: "Memorial Stadium", image: UIImage(named: "garbers"), user: "rjpimentel", caption: "Last Cal Football game of senior year!", date: Date()),
         Post(location: "Soda Hall", image: UIImage(named: "soda"), user: "chromadrive", caption: "Find your happy place 💻", date: Date())
     ]
+    
+    func addPost(post: Post) {
+        posts.append(post)
+    }
+    
+    func addThreadPost(chosenThreadName: String, threadEntry: ThreadEntry) {
+        for availableThread in threads {
+            if availableThread.name == chosenThreadName {
+                availableThread.entries?.append(threadEntry)
+                availableThread.unread += 1
+            }
+        }
+    }
 }
 
 // write firebase functions here (pushing, pulling, etc.) 

@@ -126,8 +126,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func formatDate(date: Date) -> String {
         // returns a concise string corresponding to time since post
-        let timeSince = date.timeIntervalSinceNow.description
-        return timeSince
+        return "30 seconds ago"
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -14,6 +14,11 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet var postTableView: UITableView!
     
     var chosenThread: Thread?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        threadCollectionView.reloadData()
+        postTableView.reloadData()
+    }
             
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,10 +53,8 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 cell.threadUnreadCountLabel.text = "\(currentThread.unread)"
                 cell.threadUnreadCountLabel.layer.cornerRadius = cell.threadUnreadCountLabel.frame.width / 2
                 cell.threadUnreadCountLabel.layer.masksToBounds = true
-                //                cell.threadBackground.layer.borderColor = snapagramYellow.cgColor
             } else {
                 cell.threadUnreadCountLabel.alpha = 0
-                //                cell.threadBackground.layer.borderColor = snapagramBlue.cgColor
             }
             
             cell.threadNameLabel.text = currentThread.name

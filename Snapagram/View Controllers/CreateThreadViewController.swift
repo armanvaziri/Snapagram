@@ -14,7 +14,9 @@ class CreateThreadViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var emojiLabel: UITextField!
     
     @IBOutlet var publishButton: UIButton!
-        
+    
+    var threadEntry: ThreadEntry?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,12 +38,12 @@ class CreateThreadViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func publishThreadTapped(_ sender: Any) {
-        // need to update post image view controller following creation of a new thread
-        if let name = nameLabel.text, let emoji = emojiLabel.text {
+        // creates a new thread, pushes the current entry, and pops to the camera view controller
+        if let name = nameLabel.text, let emoji = emojiLabel.text, let entry = threadEntry {
             let thread = Thread(name: name, emoji: emoji)
             feed.addThread(thread: thread)
-            
-            self.dismiss(animated: true, completion: nil)
+            feed.addThreadEntry(threadName: name, threadEntry: entry)
+            navigationController?.popToRootViewController(animated: true)
         }
     }
 

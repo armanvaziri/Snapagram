@@ -18,6 +18,10 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet var photosButton: UIButton!
     @IBOutlet var nextButton: UIButton!
     
+    override func viewWillAppear(_ animated: Bool) {
+        displayImageView.image = nil
+        nextButton.alpha = 0
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,7 +30,6 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         cameraButton.layer.masksToBounds = true
         photosButton.layer.cornerRadius = cameraButton.frame.height / 2
         photosButton.layer.masksToBounds = true
-        nextButton.alpha = 0
     }
     
     @IBAction func cameraButtonTapped(_ sender: Any) {
@@ -45,14 +48,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
-            //            let alertController = UIAlertController(title: "Whoops!", message: "There was an error unwrapping the image", preferredStyle: .alert)
-            //            let alertAction = UIAlertAction(title: "Okay", style: .default) { (action) in
-            //            }
-            //            alertController.addAction(alertAction)
-            //            self.present(alertController, animated: true, completion: nil)
-            return
-        }
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         self.image = image
         self.displayImageView.image = self.image

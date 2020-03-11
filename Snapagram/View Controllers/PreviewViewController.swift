@@ -33,7 +33,7 @@ class PreviewViewController: UIViewController {
             if count > 0 {
                 updateImage()
             } else {
-                self.dismiss(animated: true, completion: nil)
+                navigationController?.popToRootViewController(animated: true)
             }
         }
     }

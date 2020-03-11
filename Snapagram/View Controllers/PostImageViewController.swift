@@ -19,6 +19,10 @@ class PostImageViewController: UIViewController, UITextFieldDelegate, UICollecti
     @IBOutlet var postButton: UIButton!
     @IBOutlet var createThreadButton: UIButton!
         
+    override func viewWillAppear(_ animated: Bool) {
+        threadsCollectionView.reloadData()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         imageDisplay.image = self.image
@@ -72,16 +76,8 @@ class PostImageViewController: UIViewController, UITextFieldDelegate, UICollecti
     }
     
     @IBAction func postButtonPressed(_ sender: UIButton) {
-        // unwind to root view controller
-        dismiss(animated: true, completion: nil)
-        
-        //            performSegue(withIdentifier: "postToFeed", sender: sender)
-        if let vc = navigationController?.viewControllers.filter({$0 is FeedViewController}).first as? FeedViewController {
-            navigationController?.popToViewController(vc, animated: true)
-        } else {
-            print("cant find it")
-        }
-        
+        publishFeedPost()
+        navigationController?.popToRootViewController(animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -102,16 +98,17 @@ class PostImageViewController: UIViewController, UITextFieldDelegate, UICollecti
         // update local model
         // present "success" alert view controller
         // segue to feed view
+        let currentThread = feed.threads[indexPath.item]
+        postThreadEntry(threadName: currentThread.name)
+        navigationController?.popToRootViewController(animated: true)
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let dest = segue.destination as? FeedViewController {
-            //            dest.modalPresentationStyle = .fullScreen
-            //            dest.feed = self.feed
-        }
         if let dest = segue.destination as? CreateThreadViewController {
-            // configure delegate behavior here!
+            // pass newly created feed entry!
+            let newEntry = ThreadEntry(name: "you", image: image)
+            dest.threadEntry = newEntry
         }
     }
 }

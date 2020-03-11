@@ -15,13 +15,12 @@ var feed = FeedData()
 class Thread: Equatable {
     var name: String
     var emoji: String
-    var unread: Int
+    var unread: Int = 0
     var entries: [ThreadEntry]?
     
     init(name: String, emoji: String) {
         self.name = name
         self.emoji = emoji
-        self.unread = 0
         self.entries = [ThreadEntry]()
     }
     

@@ -32,6 +32,10 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // Do any additional setup after loading the view.
     }
     
+    func refreshThreads() {
+        print("delegate method called")
+        threadCollectionView.reloadData()
+    }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1

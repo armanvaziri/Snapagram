@@ -8,11 +8,6 @@
 
 import UIKit
 
-// do we need this?
-protocol ThreadsCollectionViewDelegate {
-    func refreshThread(thread: Thread)
-}
-
 class PreviewViewController: UIViewController {
     
     @IBOutlet var threadImageView: UIImageView!
@@ -33,6 +28,7 @@ class PreviewViewController: UIViewController {
             if count > 0 {
                 updateImage()
             } else {
+                // unwind to the feed view controller
                 navigationController?.popToRootViewController(animated: true)
             }
         }
@@ -41,6 +37,8 @@ class PreviewViewController: UIViewController {
     func updateImage() {
         // fill imageView and update Thread instance
         let currentFeedEntry = chosenThread?.entries?.removeFirst()
+        chosenThread?.unread -= 1
+        
         if let entry = currentFeedEntry {
             threadImageView.image = entry.image
             usernameLabel.text = entry.name
@@ -57,7 +55,6 @@ class PreviewViewController: UIViewController {
         alertController.addAction(action)
         present(alertController, animated: true, completion: nil)
     }
-    
 
     /*
     // MARK: - Navigation

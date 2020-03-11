@@ -18,14 +18,6 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     override func viewWillAppear(_ animated: Bool) {
         threadCollectionView.reloadData()
         postTableView.reloadData()
-        
-        for thread in feed.threads {
-            if thread.unread > 0 {
-                print("thread \(thread.name) has \(thread.unread) entries")
-            }
-        }
-        
-        // coredata/firebase: pull from db to get posts/threads
     }
             
     override func viewDidLoad() {
@@ -61,9 +53,8 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let count = currentThread.unread
             
             if count > 0 {
-//                cell.threadUnreadCountLabel.text = "\(count)"
+                cell.threadUnreadCountLabel.alpha = 1
                 cell.threadUnreadCountLabel.text = "\(count)"
-
                 cell.threadUnreadCountLabel.layer.cornerRadius = cell.threadUnreadCountLabel.frame.width / 2
                 cell.threadUnreadCountLabel.layer.masksToBounds = true
             } else {

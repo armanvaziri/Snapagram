@@ -13,8 +13,8 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet var threadCollectionView: UICollectionView!
     @IBOutlet var postTableView: UITableView!
     
-//    var feed = FeedData()
-    
+    var chosenThread: Thread?
+            
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,6 +26,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         // Do any additional setup after loading the view.
     }
+    
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -60,6 +61,19 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         return UICollectionViewCell()
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // segue to preview controller with selected thread
+        chosenThread = feed.threads[indexPath.item]
+        if let count = chosenThread?.entries?.count {
+            if count > 0 {
+                performSegue(withIdentifier: "feedToPreview", sender: self)
+            } else {
+                presentAlertViewController(title: "Hmmm...", message: "This thread has no entries — add some yourself!")
+            }
+        }
+        
+    }
 
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -70,7 +84,6 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("number of posts: \(feed.posts.count)")
         return feed.posts.count
     }
     
@@ -79,7 +92,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
             // configure cell
             let currentPost = feed.posts[indexPath.row]
             
-            if let image = currentPost.image as? UIImage {
+            if let image = currentPost.image {
                 cell.postImageView.image = image
             }
             cell.locationLabel.text = currentPost.location
@@ -91,9 +104,25 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return UITableViewCell()
     }
     
+    func presentAlertViewController(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Okay", style: .default) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(action)
+        present(alertController, animated: true, completion: nil)
+    }
+    
     func formatDate(date: Date) -> String {
         // returns a concise string corresponding to time since post
-        return "30 seconds ago"
+        let timeSince = date.timeIntervalSinceNow.description
+        return timeSince
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dest = segue.destination as? PreviewViewController {
+            dest.chosenThread = chosenThread
+        }
     }
     
 }

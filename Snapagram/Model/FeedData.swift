@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// create one instance of the FeedData class 
 var feed = FeedData()
 
 class Thread: Equatable {
@@ -45,6 +46,8 @@ struct Post {
 
 class FeedData {
     // initialized without unread counts for students to populate with their own content
+    // to initialize with entries, customize threads with an additional func
+    
     var threads: [Thread] = [
         Thread(name: "memes", emoji: "😂"),
         Thread(name: "dogs", emoji: "🐶"),

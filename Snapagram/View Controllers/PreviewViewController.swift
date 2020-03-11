@@ -25,16 +25,9 @@ class PreviewViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         threadImageView.contentMode = .scaleAspectFit
+        updateImage()
     }
     
-    func updateImage() {
-        // fill imageView and update Thread instance
-        let currentFeedEntry = chosenThread?.entries?.removeFirst()
-        if let entry = currentFeedEntry {
-            threadImageView.image = entry.image
-            usernameLabel.text = entry.name
-        }
-    }
     @IBAction func buttonTapped(_ sender: Any) {
         if let count = chosenThread?.entries?.count {
             if count > 0 {
@@ -43,6 +36,26 @@ class PreviewViewController: UIViewController {
                 self.dismiss(animated: true, completion: nil)
             }
         }
+    }
+    
+    func updateImage() {
+        // fill imageView and update Thread instance
+        let currentFeedEntry = chosenThread?.entries?.removeFirst()
+        if let entry = currentFeedEntry {
+            threadImageView.image = entry.image
+            usernameLabel.text = entry.name
+        } else {
+            presentAlertViewController(title: "Whoops!", message: "There was an error opening the chosen Thread.")
+        }
+    }
+    
+    func presentAlertViewController(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "Okay", style: .default) { (action) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alertController.addAction(action)
+        present(alertController, animated: true, completion: nil)
     }
     
 

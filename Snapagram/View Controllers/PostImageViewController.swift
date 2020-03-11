@@ -8,10 +8,8 @@
 
 import UIKit
 
-class PostImageViewController: UIViewController, UITextFieldDelegate {
-    
-    //    var feed = FeedData()
-    
+class PostImageViewController: UIViewController, UITextFieldDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
+        
     var image: UIImage!
     @IBOutlet var imageDisplay: UIImageView!
     @IBOutlet var threadsCollectionView: UICollectionView!
@@ -20,19 +18,18 @@ class PostImageViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var captionTextField: UITextField!
     @IBOutlet var postButton: UIButton!
     @IBOutlet var createThreadButton: UIButton!
-    
-    var feedData: FeedData?
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         imageDisplay.image = self.image
         
         locationTextField.delegate = self
         captionTextField.delegate = self
+        
         threadsCollectionView.delegate = self
         threadsCollectionView.dataSource = self
-        // Do any additional setup after loading the view.
         
+        // Do any additional setup after loading the view.
         createThreadButton.layer.cornerRadius = createThreadButton.frame.height / 2
         createThreadButton.layer.masksToBounds = true
         postButton.layer.cornerRadius = createThreadButton.frame.height / 2
@@ -55,49 +52,47 @@ class PostImageViewController: UIViewController, UITextFieldDelegate {
         performSegue(withIdentifier: "postToCreateThread", sender: self)
     }
     
-    @IBAction func postButtonPressed(_ sender: UIButton) {
-        if let location = locationTextField.text as? String, let caption = captionTextField.text as? String, let image = self.image as? UIImage {
-            let toPost = Post(location: location, image: image, user: "", caption: caption, date: Date())
-            feed.posts.append(toPost)
-            //            performSegue(withIdentifier: "postToFeed", sender: sender)
-            if let vc = navigationController?.viewControllers.filter({$0 is FeedViewController}).first as? FeedViewController {
-                navigationController?.popToViewController(vc, animated: true)
-            } else {
-                print("cant find it")
-            }
-            
-        } else {
-            print("something went wrong with this post")
+    func displayAlert() {
+        // success/error handling
+    }
+    
+    func publishFeedPost() {
+        if let location = locationTextField.text, let caption = captionTextField.text, let image = self.image {
+            let newPost = Post(location: location, image: image, user: "you", caption: caption, date: Date())
+            feed.addPost(post: newPost)
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let dest = segue.destination as? FeedViewController {
-            //            dest.modalPresentationStyle = .fullScreen
-            //            dest.feed = self.feed
-        }
-        if let dest = segue.destination as? CreateThreadViewController {
-            // configure delegate behavior here!
+    func postThreadEntry(threadName: String) {
+        // need to access username
+        if let image = self.image {
+            let newEntry = ThreadEntry(name: "you", image: image)
+            feed.addThreadEntry(threadName: threadName, threadEntry: newEntry)
         }
     }
-}
-
-extension PostImageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    @IBAction func postButtonPressed(_ sender: UIButton) {
+        // unwind to root view controller
+        dismiss(animated: true, completion: nil)
+        
+        //            performSegue(withIdentifier: "postToFeed", sender: sender)
+        if let vc = navigationController?.viewControllers.filter({$0 is FeedViewController}).first as? FeedViewController {
+            navigationController?.popToViewController(vc, animated: true)
+        } else {
+            print("cant find it")
+        }
+        
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return feedData?.threads.count ?? 0
+        return feed.threads.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if let data = feedData, let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "chooseThreadCell", for: indexPath) as? ThreadCollectionViewCell {
-            let currentThread = data.threads[indexPath.item]
-            
-            cell.threadBackground.layer.cornerRadius =  cell.threadBackground.frame.width / 2
-            cell.threadBackground.layer.masksToBounds = true
-            cell.threadBackground.backgroundColor = Constants.snapagramBlue
-            cell.threadUnreadCountLabel.alpha = 0
-            cell.threadNameLabel.text = currentThread.name
-            cell.threadEmojiLabel.text = currentThread.emoji
-            
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "chooseThreadCell", for: indexPath) as? ChooseThreadCollectionViewCell {
+            let currentThread = feed.threads[indexPath.item]
+            cell.nameLabel.text = currentThread.name
+            cell.emojiLabel.text = currentThread.emoji
             return cell
         }
         return UICollectionViewCell()
@@ -109,4 +104,14 @@ extension PostImageViewController: UICollectionViewDelegate, UICollectionViewDat
         // segue to feed view
     }
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dest = segue.destination as? FeedViewController {
+            //            dest.modalPresentationStyle = .fullScreen
+            //            dest.feed = self.feed
+        }
+        if let dest = segue.destination as? CreateThreadViewController {
+            // configure delegate behavior here!
+        }
+    }
 }

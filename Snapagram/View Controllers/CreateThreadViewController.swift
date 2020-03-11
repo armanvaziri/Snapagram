@@ -8,45 +8,42 @@
 
 import UIKit
 
-class CreateThreadViewController: UIViewController {
+class CreateThreadViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var nameLabel: UITextField!
     @IBOutlet var emojiLabel: UITextField!
     
     @IBOutlet var publishButton: UIButton!
-    
-    var feedData: FeedData?
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         publishButton.layer.cornerRadius = publishButton.frame.height / 2
-        publishButton.backgroundColor = .white
-        publishButton.setTitleColor(Constants.snapagramBlue, for: .normal)
+        publishButton.backgroundColor = Constants.snapagramBlue
+        publishButton.setTitleColor(.white, for: .normal)
     }
+    
+    // hide key board when the user touches outside keyboard
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    // user presses return key
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     @IBAction func publishThreadTapped(_ sender: Any) {
         // need to update post image view controller following creation of a new thread
-        if let name = nameLabel.text, let emoji = emojiLabel.text, let data = feedData {
+        if let name = nameLabel.text, let emoji = emojiLabel.text {
             let thread = Thread(name: name, emoji: emoji)
-            data.addThread(thread: thread)
+            feed.addThread(thread: thread)
+            
+            self.dismiss(animated: true, completion: nil)
         }
     }
-    
-
-    private func makeEffectView() {
-            let effect: UIBlurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
-            effectView = UIVisualEffectView(effect: effect)
-            effectView.frame = CGRect(x:0, y:0, width:UIScreen.main.bounds.size.width, height:UIScreen.main.bounds.size.height)
-            self.window?.addSubview(effectView)
-        }
-
-    private func removeEffectView() {
-            if effectView != nil {
-                self.effectView.removeFromSuperview()
-            }
-        }
-    
 
     /*
     // MARK: - Navigation

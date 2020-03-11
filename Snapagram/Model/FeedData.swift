@@ -15,6 +15,7 @@ var feed = FeedData()
 class Thread: Equatable {
     var name: String
     var emoji: String
+    var unread: Int = 0
     var entries: [ThreadEntry]?
     
     init(name: String, emoji: String) {
@@ -26,6 +27,11 @@ class Thread: Equatable {
     // for checking equality between thread instances to update entries
     static func == (lhs: Thread, rhs: Thread) -> Bool {
         return lhs.name == rhs.name
+    }
+    
+    func addEntry(threadEntry: ThreadEntry) {
+        entries?.append(threadEntry)
+        unread += 1
     }
 }
 
@@ -54,6 +60,7 @@ class FeedData {
         Thread(name: "tech", emoji: "💻"),
         Thread(name: "eats", emoji: "🍱"),
     ]
+
     var posts: [Post] = [
         Post(location: "New York City", image: UIImage(named: "skyline"), user: "nyerasi", caption: "Concrete jungle, wet dreams tomato 🍅 —Alicia Keys", date: Date()),
         Post(location: "Memorial Stadium", image: UIImage(named: "garbers"), user: "rjpimentel", caption: "Last Cal Football game of senior year!", date: Date()),
@@ -67,7 +74,10 @@ class FeedData {
     func addThreadEntry(threadName: String, threadEntry: ThreadEntry) {
         for availableThread in threads {
             if availableThread.name == threadName {
-                availableThread.entries?.append(threadEntry)
+//                availableThread.entries?.append(threadEntry)
+//                availableThread.unread += 1
+                availableThread.addEntry(threadEntry: threadEntry)
+                print("current # posts: \(availableThread.unread)")
             }
         }
     }

@@ -10,9 +10,9 @@ import UIKit
 
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var image: UIImage!
+    var imageToDisplay: UIImage!
     //    var imagePicker: UIImagePickerController?
-    @IBOutlet weak var displayImageView: UIImageView!
+    @IBOutlet var displayImageView: UIImageView!
     
     @IBOutlet var cameraButton: UIButton!
     @IBOutlet var photosButton: UIButton!
@@ -37,6 +37,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         imagePickerController.sourceType = .camera
+        imagePickerController.allowsEditing = false
         self.present(imagePickerController, animated: true, completion: nil)
     }
     
@@ -48,16 +49,25 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        
-        self.image = image
-        self.displayImageView.image = image
-        
-        nextButton.alpha = 1
-        picker.dismiss(animated: true, completion: nil)
-        
+        if let image = info[.originalImage] as? UIImage {
+            displayImageView.image = image
+            imageToDisplay = image
+            nextButton.alpha = 1
+            picker.dismiss(animated: true, completion: nil)
+        }
     }
+    
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//
+//        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+//            self.image = image
+//            self.displayImageView.image = image
+//            nextButton.alpha = 1
+//            picker.dismiss(animated: true, completion: nil)
+//        } else {
+//            print("what went wrong?!")
+//        }
+//    }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         performSegue(withIdentifier: "toPost", sender: sender)
@@ -69,7 +79,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? PostImageViewController {
-            dest.image = image
+            dest.image = imageToDisplay
         }
     }
 }

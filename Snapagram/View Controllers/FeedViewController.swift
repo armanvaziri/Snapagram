@@ -32,11 +32,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // Do any additional setup after loading the view.
     }
     
-    func refreshThreads() {
-        print("delegate method called")
-        threadCollectionView.reloadData()
-    }
-    
+    // collection view functions below
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -80,12 +76,13 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
             if count > 0 {
                 performSegue(withIdentifier: "feedToPreview", sender: self)
             } else {
-                presentAlertViewController(title: "Hmmm...", message: "This thread has no entries — add some yourself!")
+                presentAlertViewController(title: "Nothing to see 👀", message: "This thread has no entries — add some yourself!")
             }
         }
         
     }
 
+    // table view funcrions below
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -115,6 +112,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return UITableViewCell()
     }
     
+    // presents a generic alert controller with a message
     func presentAlertViewController(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Okay", style: .default) { (action) in
@@ -126,7 +124,14 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func formatDate(date: Date) -> String {
         // returns a concise string corresponding to time since post
-        return "30 seconds ago"
+        let secondsBetween = Date().timeIntervalSince(date)
+        if secondsBetween.isLess(than: 60) {
+            return "seconds ago"
+        }
+        if secondsBetween.isLess(than: 3600) {
+            return "minutes ago"
+        }
+        return "hours ago"
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

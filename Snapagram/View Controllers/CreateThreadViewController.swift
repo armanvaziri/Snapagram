@@ -31,14 +31,14 @@ class CreateThreadViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
-    // user presses return key
+    // hide key board when user presses return key
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
+    // creates a new thread, enqueues the current entry, and pops back to the camera view controller
     @IBAction func publishThreadTapped(_ sender: Any) {
-        // creates a new thread, pushes the current entry, and pops to the camera view controller
         if let name = nameLabel.text, let emoji = emojiLabel.text, let entry = threadEntry {
             let thread = Thread(name: name, emoji: emoji)
             feed.addThread(thread: thread)

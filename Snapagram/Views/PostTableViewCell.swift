@@ -10,7 +10,6 @@ import UIKit
 
 class PostTableViewCell: UITableViewCell {
 
-    
     @IBOutlet var timeLabel: UILabel!
     @IBOutlet var locationLabel: UILabel!
     @IBOutlet var postImageView: UIImageView!

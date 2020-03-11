@@ -227,29 +227,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fhm-JB-Zah">
-                                <rect key="frame" x="0.0" y="27" width="414" height="896"/>
-                                <color key="backgroundColor" red="1" green="0.94117647059999998" blue="0.85490196080000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <connections>
-                                    <action selector="buttonTapped:" destination="5DR-Xv-ffO" eventType="touchUpInside" id="skI-q6-M65"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nyerasi" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Scn-yc-3sf">
-                                <rect key="frame" x="155.5" y="141.5" width="103" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="0SD-IM-Kqq"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="32"/>
+                                <rect key="frame" x="155" y="784.5" width="104.5" height="44"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="32"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uvp-q0-IPj">
                                 <rect key="frame" x="20.5" y="181.5" width="373" height="587"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="current thread 👌🏾" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cEt-A6-5Te">
+                                <rect key="frame" x="20.5" y="96" width="373" height="44"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="32"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fhm-JB-Zah">
+                                <rect key="frame" x="0.0" y="27" width="414" height="896"/>
+                                <connections>
+                                    <action selector="buttonTapped:" destination="5DR-Xv-ffO" eventType="touchUpInside" id="skI-q6-M65"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Scn-yc-3sf" firstAttribute="centerX" secondItem="Ydd-r7-AuB" secondAttribute="centerX" id="10h-1H-vO2"/>
+                            <constraint firstItem="cEt-A6-5Te" firstAttribute="width" secondItem="uvp-q0-IPj" secondAttribute="width" id="2n7-Qn-AO1"/>
+                            <constraint firstItem="Scn-yc-3sf" firstAttribute="centerX" secondItem="Fhm-JB-Zah" secondAttribute="centerX" id="4oT-v6-Yd4"/>
+                            <constraint firstItem="Scn-yc-3sf" firstAttribute="top" secondItem="uvp-q0-IPj" secondAttribute="bottom" constant="16" id="8MI-fg-iEs"/>
                             <constraint firstItem="Fhm-JB-Zah" firstAttribute="centerY" secondItem="Ydd-r7-AuB" secondAttribute="centerY" id="8lM-ZP-z30"/>
                             <constraint firstItem="Fhm-JB-Zah" firstAttribute="centerX" secondItem="Ydd-r7-AuB" secondAttribute="centerX" id="JZL-fF-MhI"/>
                             <constraint firstItem="uvp-q0-IPj" firstAttribute="height" secondItem="Ydd-r7-AuB" secondAttribute="height" multiplier="0.758398" id="S4g-Xv-wQr"/>
@@ -257,14 +261,16 @@
                             <constraint firstItem="Fhm-JB-Zah" firstAttribute="width" secondItem="Mhr-5q-mJy" secondAttribute="width" id="b1U-aK-j0v"/>
                             <constraint firstItem="uvp-q0-IPj" firstAttribute="width" secondItem="Ydd-r7-AuB" secondAttribute="width" multiplier="0.900966" id="hBs-io-f2M"/>
                             <constraint firstItem="Fhm-JB-Zah" firstAttribute="height" secondItem="Mhr-5q-mJy" secondAttribute="height" id="lnh-M2-ibY"/>
-                            <constraint firstItem="uvp-q0-IPj" firstAttribute="top" secondItem="Scn-yc-3sf" secondAttribute="bottom" id="olq-uP-cxR"/>
+                            <constraint firstItem="cEt-A6-5Te" firstAttribute="top" secondItem="Ydd-r7-AuB" secondAttribute="top" constant="8" id="m76-3q-mxN"/>
                             <constraint firstItem="uvp-q0-IPj" firstAttribute="centerX" secondItem="Ydd-r7-AuB" secondAttribute="centerX" id="umD-rG-EVu"/>
+                            <constraint firstItem="cEt-A6-5Te" firstAttribute="centerX" secondItem="Fhm-JB-Zah" secondAttribute="centerX" id="xxW-F9-CX9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Ydd-r7-AuB"/>
                     </view>
                     <navigationItem key="navigationItem" id="rIv-ze-nAB"/>
                     <connections>
                         <outlet property="threadImageView" destination="uvp-q0-IPj" id="ObV-jg-J87"/>
+                        <outlet property="threadNameLabel" destination="cEt-A6-5Te" id="suV-Lm-HGD"/>
                         <outlet property="usernameLabel" destination="Scn-yc-3sf" id="i1E-GJ-hCx"/>
                     </connections>
                 </viewController>

@@ -8,6 +8,7 @@
 
 import UIKit
 
+// for sure in the feed view controller
 class ThreadCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var threadNameLabel: UILabel!

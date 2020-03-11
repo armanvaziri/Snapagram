@@ -24,22 +24,38 @@ class Thread: Equatable {
         self.entries = [ThreadEntry]()
     }
     
-    // for checking equality between thread instances to update entries
+    // for checking rudimentary equality between thread instances to update entries — think: when would this fail?
     static func == (lhs: Thread, rhs: Thread) -> Bool {
-        return lhs.name == rhs.name
+        return lhs.name == rhs.name && lhs.count() == rhs.count()
     }
     
+    // "enqueues" another entry into this thread
     func addEntry(threadEntry: ThreadEntry) {
         entries?.append(threadEntry)
         unread += 1
     }
+    
+    // "dequeues" the first entry from this thread and returns it
+    func removeEntry() -> ThreadEntry? {
+        if unread > 0 {
+            unread -= 1
+        }
+        return entries?.removeFirst()
+    }
+    
+    // returns the length of the thread
+    func count() -> Int {
+        return entries?.count ?? 0
+    }
 }
 
+// abstract structure for each thread entry
 struct ThreadEntry {
     var name: String
     var image: UIImage?
 }
 
+// abstract structure for each feed post
 struct Post {
     var location: String
     var image: UIImage?
@@ -48,9 +64,14 @@ struct Post {
     var date: Date
 }
 
+
+// this houses all of our data in the absence of Firebase or an implementation using CoreData
 class FeedData {
     // initialized without unread counts for students to populate with their own content
-    // to initialize with entries, customize threads with an additional func
+    
+    func populate(threads: [Thread]?, posts: [Post]?) {
+        // to initialize with entries, implement with an additional func
+    }
     
     var threads: [Thread] = [
         Thread(name: "memes", emoji: "😂"),
@@ -74,10 +95,7 @@ class FeedData {
     func addThreadEntry(threadName: String, threadEntry: ThreadEntry) {
         for availableThread in threads {
             if availableThread.name == threadName {
-//                availableThread.entries?.append(threadEntry)
-//                availableThread.unread += 1
                 availableThread.addEntry(threadEntry: threadEntry)
-                print("current # posts: \(availableThread.unread)")
             }
         }
     }
@@ -87,4 +105,4 @@ class FeedData {
     }
 }
 
-// write firebase functions here (pushing, pulling, etc.) 
+// write firebase/core data functions here (pushing, pulling, etc.) 

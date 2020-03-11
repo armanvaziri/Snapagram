@@ -12,6 +12,7 @@ class PreviewViewController: UIViewController {
     
     @IBOutlet var threadImageView: UIImageView!
     @IBOutlet var usernameLabel: UILabel!
+    @IBOutlet var threadNameLabel: UILabel!
     
     var chosenThread: Thread?
     
@@ -20,13 +21,14 @@ class PreviewViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         threadImageView.contentMode = .scaleAspectFit
-        updateImage()
+        updateThreadContent()
     }
     
+    // updates the ui if the chosen thread has more entries
     @IBAction func buttonTapped(_ sender: Any) {
-        if let count = chosenThread?.entries?.count {
-            if count > 0 {
-                updateImage()
+        if let thread = chosenThread {
+            if thread.count() > 0 {
+                updateThreadContent()
             } else {
                 // unwind to the feed view controller
                 navigationController?.popToRootViewController(animated: true)
@@ -34,26 +36,29 @@ class PreviewViewController: UIViewController {
         }
     }
     
-    func updateImage() {
-        // fill imageView and update Thread instance
-        let currentFeedEntry = chosenThread?.entries?.removeFirst()
-        chosenThread?.unread -= 1
+    func updateThreadContent() {
+        // fill imageView, update labels using Thread "dequeue" function
+        if let name = chosenThread?.name, let emoji = chosenThread?.emoji {
+            threadNameLabel.text = "\(name) \(emoji)"
+        }
         
-        if let entry = currentFeedEntry {
+        if let entry = chosenThread?.removeEntry() {
             threadImageView.image = entry.image
             usernameLabel.text = entry.name
         } else {
-            presentAlertViewController(title: "Whoops!", message: "There was an error opening the chosen Thread.")
+            let alertController = configureAlertViewController(title: "Whoops!", message: "There was an error opening the chosen Thread.")
+            alertController.present(alertController, animated: true, completion: nil)
         }
     }
     
-    func presentAlertViewController(title: String, message: String) {
+    // initializes and returns an alert controller with a title and a message
+    func configureAlertViewController(title: String, message: String) -> UIAlertController {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let action = UIAlertAction(title: "Okay", style: .default) { (action) in
             self.dismiss(animated: true, completion: nil)
         }
         alertController.addAction(action)
-        present(alertController, animated: true, completion: nil)
+        return alertController
     }
 
     /*

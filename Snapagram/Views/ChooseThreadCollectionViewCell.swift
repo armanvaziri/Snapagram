@@ -8,6 +8,7 @@
 
 import UIKit
 
+// for use in the post image view controller
 class ChooseThreadCollectionViewCell: UICollectionViewCell {
     @IBOutlet var emojiLabel: UILabel!
     @IBOutlet var nameLabel: UILabel!

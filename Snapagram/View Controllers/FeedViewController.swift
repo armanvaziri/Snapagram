@@ -24,6 +24,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 print("thread \(thread.name) has \(thread.unread) entries")
             }
         }
+        
         // coredata/firebase: pull from db to get posts/threads
     }
             
@@ -60,7 +61,9 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let count = currentThread.unread
             
             if count > 0 {
+//                cell.threadUnreadCountLabel.text = "\(count)"
                 cell.threadUnreadCountLabel.text = "\(count)"
+
                 cell.threadUnreadCountLabel.layer.cornerRadius = cell.threadUnreadCountLabel.frame.width / 2
                 cell.threadUnreadCountLabel.layer.masksToBounds = true
             } else {

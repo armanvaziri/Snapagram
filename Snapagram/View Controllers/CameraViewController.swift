@@ -52,10 +52,6 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        
-        self.image = image
-        self.displayImageView.image = self.image
-        nextButton.alpha = 1
         picker.dismiss(animated: true) {
             self.image = image
             self.displayImageView.image = self.image

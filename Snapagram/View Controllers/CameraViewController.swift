@@ -31,6 +31,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         photosButton.layer.cornerRadius = cameraButton.frame.height / 2
         photosButton.layer.masksToBounds = true
     }
+
     
     @IBAction func cameraButtonTapped(_ sender: Any) {
         let imagePickerController = UIImagePickerController()
@@ -51,7 +52,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         self.image = image
-        self.displayImageView.image = self.image
+        self.displayImageView.image = image
+        
         nextButton.alpha = 1
         picker.dismiss(animated: true, completion: nil)
         

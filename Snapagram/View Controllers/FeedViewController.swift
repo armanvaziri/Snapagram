@@ -49,8 +49,11 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
             cell.threadBackground.layer.borderWidth = 3
             cell.threadBackground.layer.masksToBounds = true
             
-            if currentThread.unread > 0 {
-                cell.threadUnreadCountLabel.text = "\(currentThread.unread)"
+            // initialize count to 0 if entries is nil
+            let count = currentThread.entries?.count ?? 0
+            
+            if count > 0 {
+                cell.threadUnreadCountLabel.text = "\(count)"
                 cell.threadUnreadCountLabel.layer.cornerRadius = cell.threadUnreadCountLabel.frame.width / 2
                 cell.threadUnreadCountLabel.layer.masksToBounds = true
             } else {

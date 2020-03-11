@@ -15,7 +15,6 @@ var feed = FeedData()
 class Thread: Equatable {
     var name: String
     var emoji: String
-    var unread: Int = 0
     var entries: [ThreadEntry]?
     
     init(name: String, emoji: String) {
@@ -69,7 +68,6 @@ class FeedData {
         for availableThread in threads {
             if availableThread.name == threadName {
                 availableThread.entries?.append(threadEntry)
-                availableThread.unread += 1
             }
         }
     }
